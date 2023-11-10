@@ -1,0 +1,49 @@
+import { terser } from "rollup-plugin-terser";
+
+const plugins = [];
+const minifyPlugins = [
+  terser({
+    compress: true,
+    nameCache: {
+      vars: {},
+      props: {
+        props: {
+          $_updated: "a",
+          $_references: "b",
+          $_listeners: "c",
+          $_update: "d",
+          $_dependencies: "e",
+          $_dependents: "f",
+          $_registerDependent: "g",
+          $_unregisterDependent: "h",
+          $_subscribers: "i",
+        },
+      },
+    },
+    mangle: {
+      reserved: [],
+      properties: {
+        regex: /^_/,
+      },
+    },
+  }),
+];
+
+export default [
+  {
+    input: "src/debounce.js",
+    output: {
+      file: "dist/dependable-debounce.esm.js",
+      format: "esm",
+    },
+    plugins,
+  },
+  {
+    input: "src/debounce.js",
+    output: {
+      file: "dist/dependable-debounce.esm.min.js",
+      format: "esm",
+    },
+    plugins: plugins.concat(minifyPlugins),
+  },
+];
