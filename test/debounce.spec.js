@@ -1,4 +1,4 @@
-import { observable, computed, flush } from "@dependable/state";
+import { observable, computed } from "@dependable/state";
 import { debounce } from "@dependable/debounce";
 import sinon from "sinon";
 import { expect } from "./expect.js";
