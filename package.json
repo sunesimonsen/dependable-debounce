@@ -9,8 +9,18 @@
   "exports": {
     ".": "./src/debounce.js"
   },
-  "files": ["dist", "src", "types"],
-  "keywords": ["dependable", "observable", "state", "computed", "debounce"],
+  "files": [
+    "dist",
+    "src",
+    "types"
+  ],
+  "keywords": [
+    "dependable",
+    "observable",
+    "state",
+    "computed",
+    "debounce"
+  ],
   "scripts": {
     "api-docs": "npm run types && typedoc --out api-docs --hideLegend --hideGenerator src/shared.d.ts src/debounce.js",
     "build": "rm -rf dist types && npm run types && rollup -c rollup.config.js",

@@ -27,11 +27,11 @@ You can create a debounced version of an observable to following way:
 import { debounce } from "@dependable/debounce";
 import { observable } from "@dependable/state";
 
-const searchText = observable('')
-const debouncedSearchText = debounce(searchText, 300)
+const searchText = observable("");
+const debouncedSearchText = debounce(searchText, 300);
 ```
 
-Now all updates to `searchText` will be debounced 300ms and cause a delayed update to `debouncedSearchText`. 
+Now all updates to `searchText` will be debounced 300ms and cause a delayed update to `debouncedSearchText`.
 
 This is useful when you need to create instants search, where you only want to query the server after a delay.
 
@@ -43,7 +43,7 @@ Similar to how you can debounce an observable, you can also debounce computeds:
 import { debounce } from "@dependable/debounce";
 import { observable, computed } from "@dependable/state";
 
-const searchText = observable('')
-const upperCaseSearchText = computed(() => searchText().toUpperCase())
-const debouncedUpperCaseSearchText = debounce(upperCaseSearchText, 300)
+const searchText = observable("");
+const upperCaseSearchText = computed(() => searchText().toUpperCase());
+const debouncedUpperCaseSearchText = debounce(upperCaseSearchText, 300);
 ```
