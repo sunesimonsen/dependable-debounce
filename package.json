@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@dependable/debounce",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Allowing debouncing @dependable/state subscribables",
   "author": "Sune Simonsen",
   "license": "MIT",
