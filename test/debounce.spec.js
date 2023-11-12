@@ -244,6 +244,52 @@ describe("debounce", () => {
     });
   });
 
+  describe("with a computed using the debounced value", () => {
+    let upperCaseText, computedValue;
+
+    beforeEach(() => {
+      text = observable("text");
+      upperCaseText = computed(() => text().toUpperCase());
+      debounceText = debounce(upperCaseText, timeout);
+
+      debounceText.subscribe(subscriptionSpy);
+
+      computedValue = computed(() => `computed: ${debounceText()}`);
+
+      computedValue.subscribe(subscriptionSpy);
+    });
+
+    beforeEach(async () => {
+      text("updated text");
+      await delay(10);
+      text("updated text again");
+      await delay(10);
+      text("updated text again again");
+    });
+
+    it("initially has the observable value", () => {
+      expect(computedValue, "to satisfy", "computed: TEXT");
+    });
+
+    describe("and there hasn't been any updates for the given timeout", () => {
+      beforeEach(async () => {
+        await delay(timeout + 100);
+      });
+
+      it("has the updated value", () => {
+        expect(
+          computedValue,
+          "to satisfy",
+          "computed: UPDATED TEXT AGAIN AGAIN",
+        );
+      });
+
+      it("calls the subscription once", () => {
+        expect(subscriptionSpy, "was called times", 1);
+      });
+    });
+  });
+
   describe("with a computed without subscribers", () => {
     let upperCaseText;
 

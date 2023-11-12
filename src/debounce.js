@@ -1,4 +1,4 @@
-import { observable } from "@dependable/state";
+import { observable, computed } from "@dependable/state";
 
 const g = globalThis;
 const setTimeout = g.setTimeout;
@@ -38,31 +38,37 @@ export const debounce = (input, delayMS) => {
       debouncedObservable._subscribers.size > 0;
   };
 
-  const debouncedSubscribable = () => debouncedObservable();
-  debouncedSubscribable.kind = "computed";
+  const debouncedSubscribable = computed(() => debouncedObservable());
+
+  const originalSubscribe = debouncedSubscribable.subscribe;
 
   debouncedSubscribable.subscribe = (listener) => {
     if (!active) activate();
-    setTimeout(() => {
-      debouncedObservable.subscribe(listener);
-    }, 0);
+    originalSubscribe(listener);
     updateActivation();
   };
 
+  const originalUnsubscribe = debouncedSubscribable.unsubscribe;
+
   debouncedSubscribable.unsubscribe = (listener) => {
-    debouncedObservable.unsubscribe(listener);
+    originalUnsubscribe(listener);
     updateActivation();
     if (!active) deactivate();
   };
 
+  const originalRegisterDependent = debouncedSubscribable._registerDependent;
+
   debouncedSubscribable._registerDependent = (dependent) => {
     if (!active) activate();
-    debouncedObservable._registerDependent(dependent);
+    originalRegisterDependent(dependent);
     updateActivation();
   };
 
+  const originalUnregisterDependent =
+    debouncedSubscribable._unregisterDependent;
+
   debouncedSubscribable._unregisterDependent = (dependent) => {
-    debouncedObservable._unregisterDependent(dependent);
+    originalUnregisterDependent(dependent);
     updateActivation();
     if (!active) deactivate();
   };
