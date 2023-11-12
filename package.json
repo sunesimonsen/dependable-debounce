@@ -9,18 +9,8 @@
   "exports": {
     ".": "./src/debounce.js"
   },
-  "files": [
-    "dist",
-    "src",
-    "types"
-  ],
-  "keywords": [
-    "dependable",
-    "observable",
-    "state",
-    "computed",
-    "debounce"
-  ],
+  "files": ["dist", "src", "types"],
+  "keywords": ["dependable", "observable", "state", "computed", "debounce"],
   "scripts": {
     "api-docs": "npm run types && typedoc --out api-docs --hideLegend --hideGenerator src/shared.d.ts src/debounce.js",
     "build": "rm -rf dist types && npm run types && rollup -c rollup.config.js",
@@ -38,7 +28,7 @@
     "url": "https://github.com/sunesimonsen/dependable-debounce"
   },
   "dependencies": {
-    "@dependable/state": "^0.20.0"
+    "@dependable/state": ">= 0.20"
   },
   "devDependencies": {
     "c8": "^7.11.3",
